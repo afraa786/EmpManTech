@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rare Beauty - Skin Type and Foundation Finder</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #f9f9f9;
+            color: #333;
+        }
+
+        /* Full Header Section */
+        header {
+            background-color: #B35E5E;
+            /* Dark Pink */
+            padding: 30px 0;
+            text-align: center;
+        }
+
+        header h1 {
+            color: white;
+            font-size: 3rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        /* Main Section Styling */
+        .container {
+            background-color: white;
+            margin: 50px auto;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+        }
+
+        main h2 {
+            font-size: 1.8rem;
+            color: #B35E5E;
+            margin-bottom: 10px;
+        }
+
+        form label {
+            font-weight: bold;
+            margin: 10px 0 5px;
+            display: block;
+            color: #555;
+        }
+
+        form select,
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #B35E5E;
+            color: white;
+            font-weight: bold;
+            border: none;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #992D2D;
+        }
+
+        /* Footer Styling */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Full Header -->
+    <header>
+        <h1>Rare Beauty</h1>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <main>
+            <h2>Find Your Perfect Foundation</h2>
+            <p>Fill out the form below to get personalized foundation recommendations.</p>
+            <form action="/results" method="post">
+                <label for="skinType">Select Your Skin Type:</label>
+                <select id="skinType" name="skinType" required>
+                    <option value="">-- Choose Skin Type --</option>
+                    <option value="Dry">Dry</option>
+                    <option value="Oily">Oily</option>
+                    <option value="Combination">Combination</option>
+                    <option value="Normal">Normal</option>
+                    <option value="Sensitive">Sensitive</option>
+                    <option value="Mature">Mature</option>
+                </select>
+
+                <label for="foundationColor">Select Your Foundation Shade:</label>
+                <select id="foundationColor" name="foundationColor" required>
+                    <option value="">-- Choose Foundation Shade --</option>
+                    <option value="Light Beige">Light Beige</option>
+                    <option value="Medium Beige">Medium Beige</option>
+                    <option value="Sand">Sand</option>
+                    <option value="Golden Tan">Golden Tan</option>
+                    <option value="Espresso">Espresso</option>
+                    <option value="Deep Cocoa">Deep Cocoa</option>
+                </select>
+
+                <label for="coverage">Choose Coverage Level:</label>
+                <select id="coverage" name="coverage" required>
+                    <option value="">-- Choose Coverage Level --</option>
+                    <option value="Light">Light</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Full">Full</option>
+                </select>
+
+                <label for="finish">Select Foundation Finish:</label>
+                <select id="finish" name="finish" required>
+                    <option value="">-- Choose Finish --</option>
+                    <option value="Matte">Matte</option>
+                    <option value="Dewy">Dewy</option>
+                    <option value="Natural">Natural</option>
+                </select>
+
+                <button type="submit">Submit Preferences</button>
+            </form>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        &copy; 2024 Rare Beauty. All rights reserved.
+    </footer>
+</body>
+
+</html>
