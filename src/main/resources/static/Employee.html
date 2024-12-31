@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Management</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px;">
+
+    <h1 style="text-align: center; color: #333;">Employee Management System</h1>
+
+    <!-- Add Employee Section -->
+    <div style="margin-bottom: 20px;">
+        <h2>Add Employee</h2>
+        <form id="addEmployeeForm">
+            <label>Name: </label>
+            <input type="text" id="employeeName" required style="margin-right: 10px;">
+            <label>Email: </label>
+            <input type="email" id="employeeEmail" required style="margin-right: 10px;">
+            <label>Phone: </label>
+            <input type="text" id="employeePhone" required style="margin-right: 10px;">
+            <button type="submit" style="padding: 5px 10px; background-color: #28a745; color: white; border: none; border-radius: 5px;">Add</button>
+        </form>
+    </div>
+
+    <!-- Fetch Employees Section -->
+    <div style="margin-bottom: 20px;">
+        <h2>Employee List</h2>
+        <button id="fetchEmployees" style="padding: 5px 10px; background-color: #007bff; color: white; border: none; border-radius: 5px;">Fetch Employees</button>
+        <div id="employeeList" style="margin-top: 20px;"></div>
+    </div>
+
+    <!-- Delete Employee Section -->
+    <div style="margin-bottom: 20px;">
+        <h2>Delete Employee</h2>
+        <label>ID: </label>
+        <input type="text" id="deleteEmployeeId" required style="margin-right: 10px;">
+        <button id="deleteEmployee" style="padding: 5px 10px; background-color: #dc3545; color: white; border: none; border-radius: 5px;">Delete</button>
+    </div>
+
+    <script>
+        const baseUrl = 'http://localhost:8090/api/employees';
+
+        // Add Employee
+        document.getElementById('addEmployeeForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const name = document.getElementById('employeeName').value;
+            const email = document.getElementById('employeeEmail').value;
+            const phone = document.getElementById('employeePhone').value;
+
+            fetch(baseUrl, {  // Change this line to avoid double `/employees`
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, email, phone })
+})
+
+            .then(response => response.text())
+            .then(data => {
+                alert(data);
+                document.getElementById('addEmployeeForm').reset();
+            })
+            .catch(error => console.error('Error:', error));
+        });
+
+// Fetch Employees and Display Them
+document.getElementById('fetchEmployees').addEventListener('click', function () {
+    fetch(`${baseUrl}/employees`) // Assuming baseUrl = "http://localhost:8090/api"
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch employees');
+            }
+            return response.json();
+        })
+        .then(data => {
+            const employeeList = document.getElementById('employeeList');
+            employeeList.innerHTML = ''; // Clear previous content
+
+            if (data.length === 0) {
+                employeeList.textContent = 'No employees found.';
+                return;
+            }
+
+            data.forEach(employee => {
+                const div = document.createElement('div');
+                div.style = "padding: 10px; background: #f9f9f9; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 5px;";
+                div.innerHTML = `
+                    <p><strong>ID:</strong> ${employee.id}</p>
+                    <p><strong>Name:</strong> ${employee.name}</p>
+                    <p><strong>Email:</strong> ${employee.email}</p>
+                    <p><strong>Number:</strong> ${employee.number}</p>
+                `;
+                employeeList.appendChild(div);
+            });
+        })
+        .catch(error => alert('Error: ' + error.message));
+});
+
+
+      // Delete Employee
+document.getElementById('deleteEmployee').addEventListener('click', function() {
+    const id = document.getElementById('deleteEmployeeId').value; // Get the ID input
+    if (!id) {
+        alert('Please enter an ID to delete');
+        return;
+    }
+    
+    fetch(`${baseUrl}/${id}`, { method: 'DELETE' })
+        .then(response => {
+            if (response.ok) {
+                alert('Deleted Successfully');
+            } else {
+                return response.text().then(text => {
+                    throw new Error(text);
+                });
+            }
+        })
+        .catch(error => alert('Error: ' + error.message))
+        .finally(() => {
+            document.getElementById('deleteEmployeeId').value = ''; // Clear the input field
+        });
+});
+
+    </script>
+</body>
+</html>

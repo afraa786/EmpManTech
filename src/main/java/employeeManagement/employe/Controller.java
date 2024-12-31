@@ -1,24 +1,70 @@
 package employeeManagement.employe;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-import java.util.ArrayList;
 import java.util.List;
 
-@RestController
-public class Controller {
-    private List<Employee> employees = new ArrayList<>();
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+@RestController
+@CrossOrigin(origins = "http://localhost:8090")
+@RequestMapping("/api")
+public class Controller {
+
+    @Autowired
+    private EmployeeService employeeService;
+
+    // Fetch all employees
     @GetMapping("/employees")
-    public List<Employee> getAllEmployees() {
-        return employees;
+    public ResponseEntity<List<Employee>> getAllEmployees() {
+        List<Employee> employees = employeeService.readEmployee();
+        return ResponseEntity.ok(employees);
     }
 
+    // Create a new employee
     @PostMapping("/employees")
-    public String createEmployee(@RequestBody Employee newEmployee) {
-        employees.add(newEmployee);
-        return "Saved Successfully";
+    public ResponseEntity<String> createEmployee(@RequestBody Employee employee) {
+        String result = employeeService.createEmployee(employee);
+        return ResponseEntity.ok(result);
+    }
+
+    // Delete an employee by ID
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteEmployee(@PathVariable Long id) {
+        boolean deleted = employeeService.deleteEmployee(id);
+        if (deleted) {
+            return ResponseEntity.ok("Deleted Successfully");
+        } else {
+            return ResponseEntity.status(404).body("Employee not found");
+        }
+    }
+
+    // Update an employee completely
+    @PutMapping("/{id}")
+    public ResponseEntity<String> updateEmployee(@PathVariable Long id, @RequestBody Employee employee) {
+        String result = employeeService.updateEmployee(id, employee);
+        if (result.equals("Employee not found")) {
+            return ResponseEntity.status(404).body(result);
+        }
+        return ResponseEntity.ok(result);
+    }
+
+    // Partially update an employee
+    @PatchMapping("/{id}")
+    public ResponseEntity<String> partialUpdateEmployee(@PathVariable Long id, @RequestBody Employee employee) {
+        String result = employeeService.partialUpdateEmployee(id, employee);
+        if (result.equals("Employee not found")) {
+            return ResponseEntity.status(404).body(result);
+        }
+        return ResponseEntity.ok(result);
     }
 }
