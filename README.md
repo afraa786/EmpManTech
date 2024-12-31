@@ -34,9 +34,9 @@ The **Employee Management System (EMS)** is a full-stack application that allows
    cd EmployeeManagementBackend
 Configure MySQL Database:
 
-### JDBC
+JDBC
 
-## Create a MySQL database named employee_management (or your preferred name)
+Create a MySQL database named employee_management (or your preferred name)
 Update the application.properties file with your database credentials:
 properties
 
@@ -50,7 +50,7 @@ spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 
 spring.jpa.hibernate.ddl-auto=update
 
-## Run the application:
+Run the application:
 
 Ensure you have Java 17+ installed.
 
@@ -58,6 +58,6 @@ Use the following command to run the application:
 
 mvn spring-boot:run
 
-## Access the API:
+Access the API:
 
 The backend will be available at http://localhost:8090/api
