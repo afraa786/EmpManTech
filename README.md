@@ -30,7 +30,7 @@ The **Employee Management System (EMS)** is a full-stack application that allows
 
  **Clone the repository**:
    ```bash
-   git clone https://github.com/yourusername/EmployeeManagementBackend.git
+   git clone https://github.com/yourusername/EmpManTech.git
    cd EmployeeManagementBackend
  ```
 
@@ -43,7 +43,7 @@ Update the application.properties file with your database credentials:
  ```bash
 properties
 
-spring.datasource.url=jdbc:mysql://localhost:3306/employee_management
+spring.datasource.url=jdbc:mysql://localhost:3306
 
 spring.datasource.username=your_username
 
